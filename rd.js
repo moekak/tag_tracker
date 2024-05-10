@@ -1,16 +1,13 @@
-
 // スクリプトタグのソースに貼ってあるurlのパラメータをを取得する(ドメインID)
-const scripts =document.getElementsByTagName("script")
+const script = document.querySelector("script[data-config]")
 // 
-const scriptSrc = Array.from(scripts).map((script)=> script.src)
 
-console.log(scriptSrc);
-
-const stringURL = scriptSrc[0]
-
-const url = new URL(stringURL)
-
-const id = new URLSearchParams(url.search).get("id")
+let url = ""
+let id = ""
+if(script.getAttribute("data-config") == "KD_tagadmin"){
+  url = new URL(script.src)
+  id = new URLSearchParams(url.search).get("id")
+}
 
 
 const fetchTagData = () => {
@@ -29,7 +26,7 @@ const fetchTagData = () => {
     if (!response.ok) {
       throw new Error("サーバーエラーが発生しました。");
     }
-    console.log(response);
+
     return response.json();
   });
 };
@@ -62,7 +59,7 @@ fetchTagData()
     
   })
   .catch((error) => {
-    console.log(error);
+
   });
 
   const executeScript = (data)=>{
@@ -83,14 +80,14 @@ fetchTagData()
 
   
 
-    console.log(data);
+    
 
     // 抽出したスクリプトを実行
     for (var i = 0; i < scripts.length; i++) {
       try {
         eval(scripts[i].textContent);
       } catch (error) {
-        console.log(error);
+
       }
     }
   }
