@@ -1,11 +1,19 @@
 
 // スクリプトタグのソースに貼ってあるurlのパラメータをを取得する(ドメインID)
 const script = document.querySelector("script[data-config]")
+const scripts = document.getElementsByTagName("script")
+
+
 // 
 
 let url = ""
 let id = ""
-if(script.getAttribute("data-config") == "KD_tagadmin"){
+
+if(script == null){
+  url = new URL(scripts[0].src)
+  id = new URLSearchParams(url.search).get("id")
+}
+if(script !== null &&  script.getAttribute("data-config") == "KD_tagadmin"){
   url = new URL(script.src)
   id = new URLSearchParams(url.search).get("id")
 }
