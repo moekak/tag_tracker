@@ -14,7 +14,6 @@ if(script !== null && script.getAttribute("data-config") == "KD_tagadmin"){
   id = new URLSearchParams(url.search).get("id")
 }
 
-
 const fetchTagData = () => {
 
   // 広告コードを取得する
@@ -42,13 +41,10 @@ fetchTagData()
       let tagHead = data[0]
       let tagBody = data[1]
 
-
       // タグheadを実行
       executeScript(tagHead)
       // document.head.innerHTML += tagHead
       // タグbodyはDOMが完全にロードされてから実行さる
-
-
       // HTMLの解析が完了している場合、executeScript 関数を直ちに実行
       if (document.readyState !== 'loading') {
         // document.body.innerHTML += tagBody
@@ -70,13 +66,6 @@ fetchTagData()
     //文字列をウェブページの一部として読むことができる特別なツール(DomParser)
     var parser = new DOMParser();
     // data変数に含まれるHTML文字列を解析し、DOM（Document Object Model）の構造に変換
-
-    /*
-
-    (例)    data = "<script>console.log("222222")</script>"
-
-              →<script><script>console.log("222222")</script> ドキュメントオブジェクトに変換したが、中身はセキュリティ上実行されない
-    */
     var doc = parser.parseFromString(data, "text/html");
     // <script> タグを抽出
     var scripts = doc.getElementsByTagName("script");
@@ -95,7 +84,7 @@ fetchTagData()
 
           document.head.appendChild(newScript)
       }
-      
+
     }
   }
 
@@ -103,20 +92,10 @@ fetchTagData()
 
     //文字列をウェブページの一部として読むことができる特別なツール(DomParser)
     var parser = new DOMParser();
-    // data変数に含まれるHTML文字列を解析し、DOM（Document Object Model）の構造に変換
-
-    /*
-
-    (例)    data = "<script>console.log("222222")</script>"
-
-              →<script><script>console.log("222222")</script> ドキュメントオブジェクトに変換したが、中身はセキュリティ上実行されない
-    */
     var doc = parser.parseFromString(data, "text/html");
     // <script> タグを抽出
     var scripts = doc.getElementsByTagName("script");
 
-
-   
     // 抽出したスクリプトを実行
     for (var i = 0; i < scripts.length; i++) {
   
@@ -129,12 +108,9 @@ fetchTagData()
           const newScript = document.createElement('script');
           let scriptHTML = scripts[i].outerHTML.replace(/<script[^>]*>/i, "").replace(/<\/script>/i, "");
           newScript.textContent = scriptHTML;
-
           document.body.appendChild(newScript)
       }
-      
-    }
   }
-
+}
 
 

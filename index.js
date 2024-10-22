@@ -4,8 +4,6 @@ const script = document.querySelector("script[data-config]")
 const scripts = document.getElementsByTagName("script")
 
 
-// 
-
 let url = ""
 let id = ""
 
@@ -22,14 +20,10 @@ if(script !== null &&  script.getAttribute("data-config") == "KD_tagadmin"){
 
 const fetchTagData = () => {
 
-  
-
   // 広告コードを取得する
   const code = new URLSearchParams(window.location.search).get("c")
   const data = { id: id, code: code };
 
-
- 
   return fetch("https://tag-admin.info/processTagData/fetchIndexTagApi.php", {
     method: "POST",
     headers: {
@@ -58,7 +52,6 @@ fetchTagData()
       // document.head.innerHTML += tagHead
       // タグbodyはDOMが完全にロードされてから実行さる
 
-
       // HTMLの解析が完了している場合、executeScript 関数を直ちに実行
       if (document.readyState !== 'loading') {
         // document.body.innerHTML += tagBody
@@ -73,7 +66,6 @@ fetchTagData()
     }
   })
 
-
   const executeScript = (data)=>{
 
     //文字列をウェブページの一部として読むことができる特別なツール(DomParser)
@@ -82,16 +74,13 @@ fetchTagData()
 
     /*
 
-    (例)    data = "<script>console.log("222222")</script>"
+    (例)    data = "<script>console.log("hello")</script>"
 
-              →<script><script>console.log("222222")</script> ドキュメントオブジェクトに変換したが、中身はセキュリティ上実行されない
+              →<script><script>console.log("hello")</script> ドキュメントオブジェクトに変換したが、中身はセキュリティ上実行されない
     */
     var doc = parser.parseFromString(data, "text/html");
     // <script> タグを抽出
     var scripts = doc.getElementsByTagName("script");
-
-
-   
     // 抽出したスクリプトを実行
     for (var i = 0; i < scripts.length; i++) {
   
@@ -103,12 +92,9 @@ fetchTagData()
       }else{
         let scripttext = scripts[i].outerHTML
         document.head.innerHTML += scripttext
-  
         eval(scripts[i].textContent);
-         
-       
+
       }
-      
     }
   }
   const executeScript2 = (data)=>{
@@ -116,19 +102,10 @@ fetchTagData()
     //文字列をウェブページの一部として読むことができる特別なツール(DomParser)
     var parser = new DOMParser();
     // data変数に含まれるHTML文字列を解析し、DOM（Document Object Model）の構造に変換
-
-    /*
-
-    (例)    data = "<script>console.log("222222")</script>"
-
-              →<script><script>console.log("222222")</script> ドキュメントオブジェクトに変換したが、中身はセキュリティ上実行されない
-    */
     var doc = parser.parseFromString(data, "text/html");
     // <script> タグを抽出
     var scripts = doc.getElementsByTagName("script");
 
-
-   
     // 抽出したスクリプトを実行
     for (var i = 0; i < scripts.length; i++) {
   
@@ -141,9 +118,7 @@ fetchTagData()
           const newScript = document.createElement('script');
           let scriptHTML = scripts[i].outerHTML.replace(/<script[^>]*>/i, "").replace(/<\/script>/i, "");
           newScript.textContent = scriptHTML;
-
           document.body.appendChild(newScript)
       }
-      
     }
   }
